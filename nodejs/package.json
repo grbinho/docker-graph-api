@@ -1,0 +1,17 @@
+{
+  "name": "docker-graph-proxy",
+  "version": "1.0.0",
+  "description": "node application that exposes graphql proxy for docker remote api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.14.0",
+    "express-graphql": "^0.5.4",
+    "graphql": "^0.7.2"
+  }
+}
