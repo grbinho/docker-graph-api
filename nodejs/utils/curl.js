@@ -13,36 +13,40 @@ const exec = require('child_process').exec;
 
 
 const dockerDefaultSocket = '/var/run/docker.sock';
-const GET = 'XGET';
-const PUT = 'XPUT';
-const POST = 'XPOST';
+const GET = 'GET';
+const PUT = 'PUT';
+const POST = 'POST';
 
 const curl = (socket) => {
 
   const dockerSocket = socket || dockerDefaultSocket;
 
+  //curl -X GET --unix-socket /var/run/docker.sock http:/images/json
+
   const getCurlCommand = (method, endpoint) => {
-    return `curl --unix-socket -{method} {dockerSocket} {endpoint}`;
+
+    //TODO: Fix extra slashes!!!
+    return `curl -X ${method} --unix-socket ${dockerSocket} http:/${endpoint}`;
   }
 
 
   const get = (endpoint) => {
     const curlCommand = getCurlCommand(GET, endpoint);
-    exec(curlCommand + endpoint, execCallback);
+    exec(curlCommand, execCallback);
   }
 
   const post = (endpoint) => {
     const curlCommand = getCurlCommand(POST, endpoint);
-    exec(curlCommand + endpoint, execCallback);
+    exec(curlCommand, execCallback);
   }
 
   const put = (endpoint) => {
     const curlCommand = getCurlCommand(PUT, endpoint);
-    exec(curlCommand + endpoint, execCallback);
+    exec(curlCommand, execCallback);
   }
 
   const execCallback = (error, stdout, stderr) => {
-
+    console.log(stdout);
   }
 
   return {
