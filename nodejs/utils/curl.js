@@ -30,9 +30,16 @@ const curl = (socket) => {
   }
 
 
-  const get = (endpoint) => {
+  const get = (endpoint, cb, errCb) => {
     const curlCommand = getCurlCommand(GET, endpoint);
-    exec(curlCommand, execCallback);
+    exec(curlCommand, (error, stdout, stderr) => {
+      if(error) {
+        errCb(error);
+      }
+      else {
+        cb(JSON.parse(stdout));
+      }
+    });
   }
 
   const post = (endpoint) => {
@@ -45,8 +52,12 @@ const curl = (socket) => {
     exec(curlCommand, execCallback);
   }
 
+  const returnFunc = (result) => {
+    return result;
+  };
+
   const execCallback = (error, stdout, stderr) => {
-    console.log(stdout);
+     returnFunc(stdout);
   }
 
   return {
