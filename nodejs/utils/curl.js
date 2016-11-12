@@ -27,6 +27,12 @@ const PUT = 'PUT';
 const POST = 'POST';
 
 const canUseSocket = (dockerSocket) => {
+
+  // Windows OS does not support sockets and does not have curl.
+  if(isWin) {
+    return false;
+  }
+
   let socketAvailable = false;
   const command = `curl -X GET --unix-socket ${dockerSocket} http:/info`;
   try {
@@ -61,8 +67,7 @@ const curl = (socket, host, port) => {
     }
     //TODO: Fix extra slashes!!!
     return command;
-  }
-
+  };
 
   const get = (endpoint, cb, errCb) => {
     if(useTcp) {
@@ -78,7 +83,6 @@ const curl = (socket, host, port) => {
         });
 
         response.on('end', function() {
-
           // Data reception is done, do whatever with it!
           var parsed = JSON.parse(body);
           cb(parsed);
