@@ -6,7 +6,11 @@ const {
   GraphQLID
 } = require('graphql');
 
-const MyType = require('./types/myType');
+const dockerInfo = require('./types/dockerInfo');
+const Docker = require('../docker');
+const Promise = require('promise');
+
+const dockerApi = new Docker();
 
 // The root query type is where in the data graph we can start asking questions
 const RootQueryType = new GraphQLObjectType({
@@ -17,25 +21,15 @@ const RootQueryType = new GraphQLObjectType({
       description: "Hello world property",
       resolve: () => 'world'
     },
-    myType: {
-      type: MyType,
-      description: "Just a toy type",
-      args: {
-        key: { type: new GraphQLNonNull(GraphQLString) }
-      },
+    info: {
+      type: dockerInfo,
+      ID: "Daemon Id",
+      Containers: 0,
       resolve: (obj, args, ctx) =>  {
         //ctx is a global context passed into every resolver function
-        if(args.key === "yui") {
-          return {
-            id: "yui",
-            description: "Toy instance 1"
-          }
-        }
-        else {
-          return {
-            description: ctx.defaultDescription
-          }
-        }
+        return new Promise((fulfill, reject) => {
+          return dockerApi.info.get(fulfill, reject);
+        });
       }
     }
   }

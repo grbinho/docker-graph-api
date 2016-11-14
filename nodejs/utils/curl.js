@@ -16,6 +16,7 @@ const http = require('http');
 
 // TODO: Check for version of curl. Must be 7.4 or greater
 // TODO: Windows! Probably this will need to use tcp for communication.
+// TODO: Remove extra curl output
 
 
 const dockerDefaultSocket = '/var/run/docker.sock';
@@ -34,7 +35,7 @@ const canUseSocket = (dockerSocket) => {
   }
 
   let socketAvailable = false;
-  const command = `curl -X GET --unix-socket ${dockerSocket} http:/info`;
+  const command = `curl -s -X GET --unix-socket ${dockerSocket} http:/info`;
   try {
     execSync(command);
     socketAvailable = true;
@@ -61,9 +62,9 @@ const curl = (socket, host, port) => {
 
   const getCurlCommand = (method, endpoint) => {
 
-    let command = `curl -X ${method} --unix-socket ${dockerSocket} http:/${endpoint}`;
+    let command = `curl -s -X ${method} --unix-socket ${dockerSocket} http:/${endpoint}`;
     if (useTcp) {
-      command = `curl -X ${method} ${dockerTcp}/${endpoint}`;
+      command = `curl -s -X ${method} ${dockerTcp}/${endpoint}`;
     }
     //TODO: Fix extra slashes!!!
     return command;
