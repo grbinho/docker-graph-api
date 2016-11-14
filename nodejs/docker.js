@@ -24,6 +24,14 @@ class Docker {
       }
     }
   }
+
+  get containers() {
+    return {
+      getAll: (cb, errCb) => {
+        this.curl.get('containers/json?all=1', cb, errCb);
+      }
+    }
+  }
 }
 
 module.exports = Docker;
