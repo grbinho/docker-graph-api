@@ -1,4 +1,4 @@
-const curl = require('./utils/curl')();
+const curl = require('./utils/curl')(null, 'localhost', 2375);
 
 // This file is used to explore docker APIs
 
