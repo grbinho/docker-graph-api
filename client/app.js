@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router'
+import { Provider } from 'react-redux';
+import dockerStore from './store/dockerStore';
+import Images from './components/Images';
 
-class World extends React.Component {
-  render() {
-    return <h1>World</h1>;
-  }
-}
+const App = () => (
+  <Provider store={dockerStore}>
+    <div>
+      <Router history={browserHistory}>
+        <Route path="/" component={Images} />
+      </Router>
+      <ReduxToastr position="bottom-right" />
+    </div>
+  </Provider>
+);
 
-ReactDOM.render(<World/>, document.getElementById('world'));
+ReactDOM.render(<App />, document.getElementById('docker-ui-app'));

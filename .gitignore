@@ -38,3 +38,4 @@ jspm_packages
 
 # IDEA
 .idea/
+/client/node_modules/
