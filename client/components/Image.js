@@ -1,7 +1,9 @@
-const Image = ({name}) => {
+import React from 'react';
+
+const Image = ({id, repository, tag}) => {
   return (
     <li>
-      I'm an image
+      {id}
     </li>
   )
 };

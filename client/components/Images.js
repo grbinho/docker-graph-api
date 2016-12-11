@@ -7,7 +7,7 @@ export class Images extends React.Component {
   componentWillMount() {
     if (this.props.dispatch) {
       const {dispatch} = this.props;
-
+      console.log('Dispatching get images');
       dispatch(imageActions.getImagesAction());
     }
   }
@@ -18,7 +18,7 @@ export class Images extends React.Component {
 
       return images.map((item) =>
         (<Image
-          key={item.name} {... item}
+          key={item.id} {... item}
         />)
       );
     };

@@ -1,8 +1,8 @@
-class Image {
+export default class DockerImage {
   constructor(apiModel) {
-    this.name = apiModel.name;
+    this.id = apiModel.Id;
+    this.respository = apiModel.Size;
+    this.tag = apiModel.Size;
   }
-}
-
-export default Image;
+};
 

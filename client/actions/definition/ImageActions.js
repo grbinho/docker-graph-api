@@ -1,4 +1,4 @@
-import { DockerImage } from '../../models/Image';
+import DockerImage from '../../models/Image';
 
 const Actions = {
   GET_IMAGES: 'GET_IMAGES',
@@ -17,16 +17,12 @@ class ImageActions {
     const action = {
       type: Actions.RECEIVED_IMAGES
     };
-    const transformResultPayload = (images) => images.map((im) => new Image(im));
+
+    const transformResultPayload = (images) => images.map((im) => new DockerImage(im));
 
     return this.asyncDispatchFactory(url, method, action, transformResultPayload);
   }
 }
-
-
-
-
-
 
 export default ImageActions;
 export { Actions };

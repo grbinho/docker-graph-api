@@ -11,7 +11,6 @@ const App = () => (
       <Router history={browserHistory}>
         <Route path="/" component={Images} />
       </Router>
-      <ReduxToastr position="bottom-right" />
     </div>
   </Provider>
 );
