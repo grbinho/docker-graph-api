@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Image = ({id, repository, tag}) => {
+const Image = ({Id, Repository, Tag}) => {
   return (
     <li>
-      {id}
+      {`${Repository}:${Tag}`}
     </li>
   )
 };
