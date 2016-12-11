@@ -9,6 +9,7 @@ const {
 
 const dockerInfo = require('./types/dockerInfo');
 const containerType = require('./types/container');
+const imageType = require('./types/image');
 const Docker = require('../docker');
 const Promise = require('promise');
 
@@ -40,7 +41,46 @@ const RootQueryType = new GraphQLObjectType({
         return new Promise((fulfill, reject) => {
           return dockerApi.containers.getAll(fulfill, reject);
         });
+      }
+    },
+    images: {
+      type: new GraphQLList(imageType),
+      resolve: () => {
+        return new Promise((fulfill, reject) => {
+           return dockerApi.images.getAll((images) => {
+             // Fulfill
+             // transform images into or type
+             // Each image item can produce more that one image. This is because of tags.
+             // It contains RepoTag array.
+             const resultingImages = images.reduce((result, image) => {
+               if(image.RepoTags) {
+                 result = result.concat(image.RepoTags.map((tag) => {
+                   return {
+                     Id: image.Id,
+                     Repository: tag.split(':')[0],
+                     Tag: tag.split(':')[1],
+                     Created: image.Created,
+                     Size: image.Size
+                   }
+                 }));
+               } else {
+                 result.push({
+                   Id: image.Id,
+                   Repository: '<none>',
+                   Tag: '<none>',
+                   Created: image.Created,
+                   Size: image.Size
+                 });
+               }
+               return result;
+             }, []);
 
+             fulfill(resultingImages);
+           },
+             reject
+           );
+
+        });
       }
     }
   })

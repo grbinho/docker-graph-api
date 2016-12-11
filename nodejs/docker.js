@@ -12,7 +12,7 @@ class Docker {
   get images() {
     return {
       getAll: (cb, errCb) => {
-        this.curl.get('images/json', cb, errCb);
+        this.curl.get('images/json?all=0', cb, errCb);
       },
     }
   }
