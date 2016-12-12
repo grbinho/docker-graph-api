@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import Images from './components/Images';
+import Containers from './components/Containers';
 import './semantic/dist/semantic.min.css';
+import AppMenu from './appMenu';
 
 
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
@@ -16,11 +18,13 @@ import { ApolloProvider } from 'react-apollo';
 
 const App = () => (
   <ApolloProvider client={client}>
-    <div>
       <Router history={browserHistory}>
-        <Route path="/" component={Images} />
+        <Route path="/" component={AppMenu} >
+          <IndexRoute component={Containers}/>
+          <Route path="containers" component={Containers} />
+          <Route path="images" component={Images} />
+        </Route>
       </Router>
-    </div>
   </ApolloProvider>
 );
 

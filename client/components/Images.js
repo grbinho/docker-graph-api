@@ -8,16 +8,15 @@ import gql from 'graphql-tag'
 const Images = ({data}) => {
   const renderImages = () => {
     if(data.images) {
-
-      console.log(data.images);
-
       return data.images.map((item) =>
         (<Image
           key={`${item.Id}_${item.Repository}_${item.Tag}`} {... item}
         />)
       );
     }else {
-      return <div>No images</div>;
+      return <Table.Row>
+        <Table.Cell> No items</Table.Cell>
+      </Table.Row>;
     }
 
   };
