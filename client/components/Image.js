@@ -2,9 +2,17 @@ import React from 'react';
 
 const Image = ({Id, Repository, Tag}) => {
   return (
-    <li>
-      {`${Repository}:${Tag}`}
-    </li>
+    <tr>
+      <td>
+        {Id.split(':')[1].substr(0,12)}
+      </td>
+      <td>
+        {Repository}
+      </td>
+      <td>
+        {Tag}
+      </td>
+    </tr>
   )
 };
 

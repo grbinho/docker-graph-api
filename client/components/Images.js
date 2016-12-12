@@ -12,19 +12,24 @@ const Images = ({data}) => {
 
       return data.images.map((item) =>
         (<Image
-          key={item.Id} {... item}
+          key={`${item.Id}_${item.Repository}_${item.Tag}`} {... item}
         />)
       );
     }else {
-      return <li>No images</li>;
+      return <div>No images</div>;
     }
 
   };
 
   return (
-    <ul>
-      {renderImages()}
-    </ul>
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Repository</th>
+        <th>Tag</th>
+      </thead>
+      <tbody>{renderImages()}</tbody>
+    </table>
   )
 };
 
