@@ -13,6 +13,15 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file?name=semantic/dist/themes/*/assets/fonts/[name].[ext]'
+      },
+      {
+        test: /\.(png|jpg|jpeg)$/,
+        loader: 'file?name=semantic/dist/themes/*/assets/images/[name].[ext]'
       }
     ]
   },

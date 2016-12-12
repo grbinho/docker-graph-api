@@ -1,18 +1,19 @@
 import React from 'react';
+import { Icon, Table } from 'semantic-ui-react'
 
 const Image = ({Id, Repository, Tag}) => {
   return (
-    <tr>
-      <td>
+    <Table.Row>
+      <Table.Cell>
         {Id.split(':')[1].substr(0,12)}
-      </td>
-      <td>
+      </Table.Cell>
+      <Table.Cell>
         {Repository}
-      </td>
-      <td>
+      </Table.Cell>
+      <Table.Cell>
         {Tag}
-      </td>
-    </tr>
+      </Table.Cell>
+    </Table.Row>
   )
 };
 

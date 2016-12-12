@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { Icon, Table } from 'semantic-ui-react'
 import Image from './Image';
 
 import { graphql } from 'react-apollo';
@@ -22,14 +23,16 @@ const Images = ({data}) => {
   };
 
   return (
-    <table>
-      <thead>
-        <th>Id</th>
-        <th>Repository</th>
-        <th>Tag</th>
-      </thead>
-      <tbody>{renderImages()}</tbody>
-    </table>
+    <Table celled striped>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Id</Table.HeaderCell>
+          <Table.HeaderCell>Repository</Table.HeaderCell>
+          <Table.HeaderCell>Tag</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>{renderImages()}</Table.Body>
+    </Table>
   )
 };
 

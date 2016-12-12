@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router'
 import Images from './components/Images';
+import './semantic/dist/semantic.min.css';
 
 
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
