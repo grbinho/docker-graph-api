@@ -27,6 +27,8 @@ const Containers = ({data}) => {
         <Table.Row>
           <Table.HeaderCell>Id</Table.HeaderCell>
           <Table.HeaderCell>Image</Table.HeaderCell>
+          <Table.HeaderCell>State</Table.HeaderCell>
+          <Table.HeaderCell>Name</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -42,6 +44,8 @@ Containers.propTypes = {
     containers: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       dockerImage: PropTypes.string,
+      state: PropTypes.string,
+      name: PropTypes.string
     }))
   }).isRequired,
 };
@@ -52,6 +56,8 @@ const DockerContainersQuery = gql`
     containers {
       Id
       DockerImage: Image
+      State
+      Name
     }
   }`;
 

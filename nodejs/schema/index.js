@@ -39,7 +39,19 @@ const RootQueryType = new GraphQLObjectType({
       type: new GraphQLList(containerType),
       resolve: () => {
         return new Promise((fulfill, reject) => {
-          return dockerApi.containers.getAll(fulfill, reject);
+          return dockerApi.containers.getAll((containers) => {
+            const result = containers.map((container) => {
+              return {
+                Id: container.Id,
+                Image: container.Image,
+                State: container.State,
+                Name: container.Names ? container.Names[0] : ''
+              }
+            });
+            return fulfill(result);
+          },
+            reject
+          );
         });
       }
     },
