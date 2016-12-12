@@ -1,51 +1,61 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import imageActions from '../actions/imageActions';
+import React, { PropTypes } from 'react';
 import Image from './Image';
 
-export class Images extends React.Component {
-  componentWillMount() {
-    if (this.props.dispatch) {
-      const {dispatch} = this.props;
-      console.log('Dispatching get images');
-      dispatch(imageActions.getImagesAction());
-    }
-  }
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag'
 
-  render() {
-    const renderImages = () => {
-      const {images} = this.props;
+const Images = ({data}) => {
+  const renderImages = () => {
+    if(data.images) {
 
-      return images.map((item) =>
+      console.log(data.images);
+
+      return data.images.map((item) =>
         (<Image
-          key={item.id} {... item}
+          key={`${item.Id}_${item.Repository}_${item.Tag}`} {... item}
         />)
       );
-    };
+    }else {
+      return <div>No images</div>;
+    }
 
-    return (
-      <ul>
-        {renderImages()}
-      </ul>
-    )
-  }
-}
+  };
 
-Images.propTypes = {
-  dispatch: React.PropTypes.func,
-  images: React.PropTypes.array
+  return (
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Repository</th>
+        <th>Tag</th>
+      </thead>
+      <tbody>{renderImages()}</tbody>
+    </table>
+  )
 };
 
-const mapStateToProps = (state) => (
-  {
-    images: state.images
-  }
-);
+Images.propTypes = {
+  data: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    images: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      repository: PropTypes.string,
+      tag: PropTypes.string
+    }))
+  }).isRequired,
+};
 
-const mapDispatchToProps = (dispatch) => (
+// We use the gql tag to parse our query string into a query document
+const DockerImagesQuery = gql`
   {
-    dispatch
-  }
-);
+    images {
+      Id
+      Repository
+      Tag
+      Created
+      Size
+    }
+  }`;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Images);
+const ImagesWithData = graphql(DockerImagesQuery)(Images);
+
+export default ImagesWithData;
